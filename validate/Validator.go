@@ -88,7 +88,7 @@ func NewValidator() (*Validator) {
 		ValidateDomainName: func(domain_name string) ([]error) {
 			return valid_domain_name_characters.ValidateDomainName(domain_name)
 		},
-		ValidateDirectoryName: func(directory_name string) ([]error)
+		ValidateDirectoryName: func(directory_name string) ([]error) {
 			return valid_directory_name_characters.ValidateDirectoryName(directory_name)
 		},
 		ValidateFilenName: func(file_name string) ([]error) {
