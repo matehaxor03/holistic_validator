@@ -12,6 +12,9 @@ type Validator struct {
 	ValidateRepositoryAccountName func(repository_account_name string) ([]error)
 	ValidatePortNumber func(port_number string) ([]error)
 	ValidateDomainName func(domain_name string) ([]error)
+	ValidateFilenName func(filen_name string) ([]error)
+	ValidateDirectoryName func(directory_name string) ([]error)
+
 
 
 	GetValidateGrantFunc func() (*func(string) []error)
@@ -34,6 +37,7 @@ type Validator struct {
 func NewValidator() (*Validator) {
 	database_reserved_words_blacklist := NewDatabaseReservedWordsBlackList()
 	valid_database_name_characters := NewDatabaseNameCharacterWhitelist()
+	valid_directory_name_characters := NewDirectoryNameCharacterWhitelist()
 	valid_table_name_characters := NewTableNameCharacterWhitelist()
 	valid_column_name_characters := NewColumnNameCharacterWhitelist()
 	
@@ -42,6 +46,7 @@ func NewValidator() (*Validator) {
 	valid_repository_name_characters := NewRepositoryNameCharacterWhitelist()
 	valid_repository_account_name_characters := NewRepositoryAccountNameCharacterWhitelist()
 	valid_domain_name_characters := NewDomainNameCharacterWhitelist()
+	valid_file_name_characters := NewFileNameCharacterWhitelist()
 	valid_port_number_characters := NewPortNumberCharacterWhitelist()
 
 	valid_character_set_words := NewCharacterSetWordWhitelist()
@@ -83,7 +88,12 @@ func NewValidator() (*Validator) {
 		ValidateDomainName: func(domain_name string) ([]error) {
 			return valid_domain_name_characters.ValidateDomainName(domain_name)
 		},
-
+		ValidateDirectoryName: func(directory_name string) ([]error)
+			return valid_directory_name_characters.ValidateDirectoryName(directory_name)
+		},
+		ValidateFilenName: func(file_name string) ([]error) {
+			return valid_file_name_characters.ValidateFileName(file_name)
+		},
 		GetValidateDatabaseNameFilterAllFunc: func() (*func(string) []error) {
 			return valid_grant_words.GetValidateDatabaseNameFilterAllFunc()
 		},
@@ -129,6 +139,8 @@ func NewValidator() (*Validator) {
 		GetValidateUsernameFunc: func() (*func(string) []error) {
 			return valid_username_characters.GetValidateUsernameFunc()
 		},
+	
+
 		
 
 	}
