@@ -12,7 +12,7 @@ type Validator struct {
 	ValidateRepositoryAccountName func(repository_account_name string) ([]error)
 	ValidatePortNumber func(port_number string) ([]error)
 	ValidateDomainName func(domain_name string) ([]error)
-	ValidateFilenName func(filen_name string) ([]error)
+	ValidateFileName func(filen_name string) ([]error)
 	ValidateDirectoryName func(directory_name string) ([]error)
 
 
@@ -91,7 +91,7 @@ func NewValidator() (*Validator) {
 		ValidateDirectoryName: func(directory_name string) ([]error) {
 			return valid_directory_name_characters.ValidateDirectoryName(directory_name)
 		},
-		ValidateFilenName: func(file_name string) ([]error) {
+		ValidateFileName: func(file_name string) ([]error) {
 			return valid_file_name_characters.ValidateFileName(file_name)
 		},
 		GetValidateDatabaseNameFilterAllFunc: func() (*func(string) []error) {
