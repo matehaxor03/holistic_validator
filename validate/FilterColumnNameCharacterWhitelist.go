@@ -30,7 +30,7 @@ func NewColumnNameCharacterWhitelist() (*ColumnNameCharacterWhitelist) {
 			errors = append(errors, fmt.Errorf("column_name is too short must be at least 2 characters"))
 		}
 
-		whitelist_errors := validation_functions.WhitelistCharacters(column_name_character_whitelist, column_name, "Validator.ValidateTableName", "dao.Table.table_name")
+		whitelist_errors := validation_functions.WhitelistCharacters(column_name_character_whitelist, column_name, "Validator.validateColumnName", "dao.Table.column_name")
 		if whitelist_errors != nil {
 			errors = append(errors, whitelist_errors...)
 		}
