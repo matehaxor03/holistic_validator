@@ -14,6 +14,7 @@ type Validator struct {
 	ValidateDomainName func(domain_name string) ([]error)
 	ValidateFileName func(filen_name string) ([]error)
 	ValidateDirectoryName func(directory_name string) ([]error)
+	ValidateEnvironmentVariableName func(environment_variable_name string) ([]error)
 
 
 
@@ -32,6 +33,7 @@ type Validator struct {
 	GetValidateUsernameFunc func() (*func(string) []error)
 	GetValidateRepositoryNameFunc func() (*func(string) []error)
 	GetValidateRepositoryAccountNameFunc func() (*func(string) []error)
+	GetValidateEnvironmentVariableNameFunc func() (*func(string) []error)
 }
 
 func NewValidator() (*Validator) {
@@ -46,6 +48,7 @@ func NewValidator() (*Validator) {
 	valid_repository_name_characters := NewRepositoryNameCharacterWhitelist()
 	valid_repository_account_name_characters := NewRepositoryAccountNameCharacterWhitelist()
 	valid_domain_name_characters := NewDomainNameCharacterWhitelist()
+	valid_environment_variable_name_characters := NewEnvironmentVariableNameWhitelist()
 	valid_file_name_characters := NewFileNameCharacterWhitelist()
 	valid_port_number_characters := NewPortNumberCharacterWhitelist()
 
@@ -88,6 +91,9 @@ func NewValidator() (*Validator) {
 		ValidateDomainName: func(domain_name string) ([]error) {
 			return valid_domain_name_characters.ValidateDomainName(domain_name)
 		},
+		ValidateEnvironmentVariableName: func(environment_variable_name string) ([]error) {
+			return valid_environment_variable_name_characters.ValidateEnvironmentVariableName(environment_variable_name)
+		},
 		ValidateDirectoryName: func(directory_name string) ([]error) {
 			return valid_directory_name_characters.ValidateDirectoryName(directory_name)
 		},
@@ -123,6 +129,9 @@ func NewValidator() (*Validator) {
 		},
 		GetValidateDomainNameFunc: func() (*func(string) []error) {
 			return valid_domain_name_characters.GetValidateDomainNameFunc()
+		},
+		GetValidateEnvironmentVariableNameFunc: func() (*func(string) []error) {
+			return valid_environment_variable_name_characters.GetValidateEnvironmentVariableNameFunc()
 		},
 		GetValidatePortNumberFunc: func() (*func(string) []error) {
 			return valid_port_number_characters.GetValidatePortNumberFunc()
