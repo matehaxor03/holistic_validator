@@ -1,6 +1,7 @@
 package validate
 
 type Validator struct {
+	ValidateBase64Encoding func(base64 string) ([]error)
 	ValidateTableName func(table_name string) ([]error)
 	ValidateDatabaseName func(database_name string) ([]error)
 	ValidateColumnName  func(column_name string) ([]error)
@@ -18,6 +19,7 @@ type Validator struct {
 
 
 
+	GetValidateBase64EncodingFunc func() (*func(string) []error)
 	GetValidateGrantFunc func() (*func(string) []error)
 	GetValidateTableNameFilterAllFunc func() (*func(string) []error)
 	GetValidateDatabaseNameFilterAllFunc func() (*func(string) []error)
@@ -37,6 +39,7 @@ type Validator struct {
 }
 
 func NewValidator() (*Validator) {
+	valid_base64_characters := NewBase64EncodingCharacterWhitelist()
 	database_reserved_words_blacklist := NewDatabaseReservedWordsBlackList()
 	valid_database_name_characters := NewDatabaseNameCharacterWhitelist()
 	valid_directory_name_characters := NewDirectoryNameCharacterWhitelist()
@@ -58,6 +61,9 @@ func NewValidator() (*Validator) {
 	valid_grant_words := NewGrantNameWhitelist()
 
 	x := Validator {
+		ValidateBase64Encoding: func(base64 string) ([]error) {
+			return valid_base64_characters.ValidateBase64Encoding(base64)
+		},
 		ValidateTableName: func(table_name string) ([]error) {
 			return valid_table_name_characters.ValidateTableName(table_name)
 		},
@@ -99,6 +105,9 @@ func NewValidator() (*Validator) {
 		},
 		ValidateFileName: func(file_name string) ([]error) {
 			return valid_file_name_characters.ValidateFileName(file_name)
+		},
+		GetValidateBase64EncodingFunc: func() (*func(string) []error) {
+			return valid_base64_characters.GetValidateBase64EncodingFunc()
 		},
 		GetValidateDatabaseNameFilterAllFunc: func() (*func(string) []error) {
 			return valid_grant_words.GetValidateDatabaseNameFilterAllFunc()
