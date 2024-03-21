@@ -68,5 +68,6 @@ func GetValidFilenameCharacters() map[string]interface{} {
 	valid_chars["-"] = nil
 	valid_chars["."] = nil
 	valid_chars["@"] = nil
+	valid_chars["#"] = nil
 	return valid_chars
 }
